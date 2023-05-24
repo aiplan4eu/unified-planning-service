@@ -1,0 +1,6 @@
+version: "3.3"
+services:
+  unified-planning:
+    build: .
+    ports:
+      - "8061:8061"

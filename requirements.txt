@@ -1,0 +1,4 @@
+grpcio==1.37.0
+grpcio-tools==1.37.0
+unified-planning==0.6.0
+unified-planning[fast-downward]
