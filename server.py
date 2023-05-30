@@ -28,8 +28,12 @@ class UnifiedPlanningServer(up_pb2_grpc.UnifiedPlanningServicer):
         self.reader = ProtobufReader()
         self.writer = ProtobufWriter()
 
-    def planAnyTime(self, request, context):
-        raise NotImplementedError
+    def planAnytime(self, request, context):
+        problem = self.reader.convert(request.problem)
+        with AnytimePlanner(problem_kind=problem.kind, anytime_guarantee="INCREASING_QUALITY") as planner:
+            for p in planner.get_solutions(problem):
+                next_result = self.writer.convert(p)
+                yield next_result
 
     def planOneShot(self, request, context):
         problem = self.reader.convert(request.problem)
@@ -43,10 +47,25 @@ class UnifiedPlanningServer(up_pb2_grpc.UnifiedPlanningServicer):
         return answer
 
     def validatePlan(self, request, context):
-        raise NotImplementedError
+        problem = self.reader.convert(request.problem)
+        plan = self.reader.convert(request.plan)
+        with PlanValidator(problem_kind=problem.kind, plan_kind=plan.kind) as validator:
+            validation_result = validator.validate(problem, plan)
+            answer = self.writer.convert(validation_result)
+            return answer
     
-    def compile(self, request, context):    
-        raise NotImplementedError
+    def compile(self, request, context):
+        problem = self.reader.convert(request)
+        with Compiler(
+            problem_kind=problem.kind,
+            compilation_kinds=[
+                # TODO: This should be supplied with request
+                CompilationKind.CONDITIONAL_EFFECTS_REMOVING,
+                CompilationKind.NEGATIVE_CONDITIONS_REMOVING
+                ]) as compiler:
+            result = compiler.compile(problem)
+            answer = self.writer.convert(result)
+            return answer
     
     
     def start(self):

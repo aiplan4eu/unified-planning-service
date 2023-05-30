@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "unified_planning.proto";
+
+message Empty {
+}
+
+service UnifiedPlanningProducerConsumer {
+  rpc produce(Empty) returns (PlanRequest);
+  rpc consume(PlanGenerationResult) returns (Empty);
+}

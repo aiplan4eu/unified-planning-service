@@ -24,7 +24,7 @@ In a Python 3.8 environment, run:
 
 ## Usage
 
-The following example can be found [./test_client.py](here).
+The following example can be found [./examples/test_client.py](here).
 
 ### Create a Planning Problem 
 
@@ -83,5 +83,8 @@ Finally, we can call the unified-planning service and print the result:
 
 ## Known Issues / TODO
 
-- [ ] Add remaining planning modes
-- [ ] Install additional engines in container
+- [X] Add remaining planning modes
+- [X] Install additional engines in container
+- [ ] Create sample consumer/producer for UP service
+- [ ] Compilation service does not include compilation type information
+- [ ] Server-side PlanAnytime stream not stopped when client stops

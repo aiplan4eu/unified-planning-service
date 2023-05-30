@@ -3,4 +3,4 @@ services:
   unified-planning:
     build: .
     ports:
-      - "8061:8061"
+      - "8002:8061"
