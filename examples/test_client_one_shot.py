@@ -5,6 +5,7 @@ import unified_planning.grpc.generated.unified_planning_pb2 as up_pb2
 import unified_planning.grpc.generated.unified_planning_pb2_grpc as up_pb2_grpc
 
 from unified_planning.grpc.proto_writer import ProtobufWriter
+from unified_planning.grpc.proto_reader import ProtobufReader
 from unified_planning.shortcuts import *
 
 
@@ -42,7 +43,9 @@ def main():
     )
 
     result = planner_stub.planOneShot(request)
-    print(result)
+    reader = ProtobufReader()
+    result_up = reader.convert(result, problem)
+    print(result_up.plan)
 
 
 if __name__ == "__main__":

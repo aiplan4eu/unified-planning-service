@@ -1,4 +1,4 @@
-grpcio==1.37.0
-grpcio-tools==1.37.0
-unified-planning==0.6.0
+grpcio==1.71.0
+grpcio-tools==1.71.0
+unified-planning==1.2.0
 unified-planning[engines]

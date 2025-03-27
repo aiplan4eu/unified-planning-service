@@ -1,6 +1,7 @@
 # The Unified Planning Service
 
-Offers planning services to the AI on Demand platform through Protobuf/gRPC.
+Offers unified-planning (version 1.2.0) as a service to the AI on Demand
+platform through Protobuf/gRPC.
 
 - [Protobuf Messages and Service Definition](https://github.com/aiplan4eu/unified-planning/blob/master/unified_planning/grpc/unified_planning.proto)
 
@@ -8,7 +9,7 @@ Offers planning services to the AI on Demand platform through Protobuf/gRPC.
 
 ### Locally
 
-In a Python 3.8 environment, run:
+In a Python 3.9 environment, run:
     
     pip install -r requirements.txt
     python run.py
@@ -20,11 +21,9 @@ In a Python 3.8 environment, run:
 
 ### AI4Experiments
 
-
-
 ## Usage
 
-The following example can be found [./examples/test_client.py](here).
+The following example can be found [./examples/test_client_one_shot.py](here).
 
 ### Create a Planning Problem 
 
@@ -78,13 +77,14 @@ Finally, we can call the unified-planning service and print the result:
 
 ```python
     result = planner_stub.planOneShot(request)
-    print(result)
+    reader = ProtobufReader()
+    result_up = reader.convert(result, problem)
+    print(result_up.plan)
 ```
 
 ## Known Issues / TODO
 
 - [X] Add remaining planning modes
 - [X] Install additional engines in container
-- [ ] Create sample consumer/producer for UP service
 - [ ] Compilation service does not include compilation type information
 - [ ] Server-side PlanAnytime stream not stopped when client stops
